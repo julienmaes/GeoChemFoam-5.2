@@ -30,6 +30,7 @@ module load other-software
 module load gcfoam/5.2
 source $GCFOAM_DIR/etc/bashrc_archer2
 
+export PLATFORM=ARCHER2
 echo -e "Run job_name in parallel on $NP $PLATFORM processors"
 
 # Choose just one of the following parallel scripts.
