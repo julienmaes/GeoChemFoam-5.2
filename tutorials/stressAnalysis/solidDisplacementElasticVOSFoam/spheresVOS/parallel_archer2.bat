@@ -25,15 +25,6 @@ source $GCFOAM_DIR/etc/bashrc_archer2
 module load cray-python
 source /work/ecseaj02/ecseaj02/gavingcf/myvenv/bin/activate
 
-# Exit if the total number of tasks do not equal the total number of processor directories.
-export NP="$(find processor* -maxdepth 0 -type d -print| wc -l)"
-if [ "$NP" -ne "$((SLURM_TASKS_PER_NODE*SLURM_JOB_NUM_NODES))" ]; then
-     echo "Error: number of tasks does not equal the number of processor directories"
-     echo "SBATCH ntasks-per-node times nodes must equal $NP"
-     echo "However they are $SLURM_TASKS_PER_NODE and $SLURM_JOB_NUM_NODES, respectively"
-     exit 1
-fi
-
 export PLATFORM=ARCHER2
 echo -e "Run job_name in parallel on $NP $PLATFORM processors"
 
