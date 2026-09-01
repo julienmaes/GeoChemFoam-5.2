@@ -4,6 +4,9 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=8
 #SBATCH --cpus-per-task=1
+#SBATCH --distribution=block:block
+#SBATCH --hint=nomultithread
+
 
 # Replace [budget code] below with your budget code (e.g. t01)
 #SBATCH --account=ecseaj02
@@ -16,14 +19,16 @@ export OMP_NUM_THREADS=1
 # Propagate the cpus-per-task setting from script to srun commands
 export SRUN_CPUS_PER_TASK=$SLURM_CPUS_PER_TASK
 
-# Configure GCF using Archer2 module
-module load other-software
-module load gcfoam/5.2
-source $GCFOAM_DIR/etc/bashrc_archer2
+export PLATFORM=ARCHER2
 
 # Configure Python
 module load cray-python
 source /work/ecseaj02/ecseaj02/gavingcf/myvenv/bin/activate
+
+# Configure GCF using Archer2 module
+module load other-software
+module load gcfoam/5.2
+source $GCFOAM_DIR/etc/bashrc_archer2
 
 export PLATFORM=ARCHER2
 echo -e "Run job_name in parallel on $NP $PLATFORM processors"
